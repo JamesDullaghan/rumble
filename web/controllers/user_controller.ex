@@ -1,7 +1,7 @@
 defmodule Rumble.UserController do
   use Rumble.Web, :controller
   alias Rumble.User
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show]
 
   def index(conn, _params) do
     users = Repo.all(Rumble.User)
@@ -28,21 +28,6 @@ defmodule Rumble.UserController do
         |> redirect(to: user_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
-    end
-  end
-
-  # function plug
-  # a function plug is a function that receives 2 arguments
-  # the connection and a set of options
-  # the plug must return the connection
-  defp authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: page_path(conn, :index))
-      |> halt()
     end
   end
 end

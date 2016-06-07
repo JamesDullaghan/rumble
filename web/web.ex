@@ -36,6 +36,8 @@ defmodule Rumble.Web do
 
       import Rumble.Router.Helpers
       import Rumble.Gettext
+      # we are importing only the function authenticate_user (with arity 2) from Rumble.Auth
+      import Rumble.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +60,8 @@ defmodule Rumble.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import Rumble.Auth, only: [authenticate_user: 2]
     end
   end
 
