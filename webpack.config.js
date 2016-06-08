@@ -7,6 +7,7 @@ var prod = env === 'prod'
 var basePath = './web/static/js/'
 var bundlePath = basePath + 'bundle.js'
 var phoenixPath = basePath + 'phoenix.js'
+var phoenixHtmlPath = basePath + 'phoenix_html.js'
 var outputPath = path.join(__dirname, './priv/static/js')
 
 var plugins = [new webpack.NoErrorsPlugin()]
@@ -27,7 +28,8 @@ if (prod) {
     'webpack-dev-server/client?' + publicPath,
     'webpack/hot/only-dev-server',
     bundlePath,
-    phoenixPath
+    phoenixPath,
+    phoenixHtmlPath
   ]
 }
 
