@@ -4,7 +4,9 @@ var webpack = require('webpack')
 var env = process.env.MIX_ENV || 'dev'
 var prod = env === 'prod'
 
-var entry = './web/static/js/bundle.js'
+var basePath = './web/static/js/'
+var entry = basePath + 'bundle.js'
+var entry2 = basePath + 'phoenix.js'
 var plugins = [new webpack.NoErrorsPlugin()]
 var loaders = ["babel?presets[]=es2015,presets[]=stage-0,presets[]=react"]
 var publicPath = 'http://localhost:4001/'
@@ -18,11 +20,14 @@ if (prod) {
 
 module.exports = {
   devtool: prod ? null : 'eval-sourcemaps',
-  entry: prod ? entry : [
-    'webpack-dev-server/client?' + publicPath,
-    'webpack/hot/only-dev-server',
-    entry
-  ],
+  entry: prod ? entry : {
+    bundle: [
+      'webpack-dev-server/client?' + publicPath,
+      'webpack/hot/only-dev-server',
+      entry
+    ],
+    phoenix: entry2
+  },
   output: {
     path: path.join(__dirname, './priv/static/js'),
     filename: 'bundle.js',
